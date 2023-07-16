@@ -23,7 +23,7 @@ def initProcessImage(image):
     old_keypoints, old_descriptors = feature_detector.detectAndCompute(old_frame, None)
 
     keypoint_counter = len(old_keypoints)
-    current_matches = dict((i,i) for i in xrange(len(old_keypoints)))
+    current_matches = dict((i,i) for i in range(len(old_keypoints)))
 
     isInitialized = True
 
@@ -90,9 +90,10 @@ def processImage(image, plot=False):
     return (current_matches, new_keypoints)
 
 def drawFeaturePoints(image, matches, keypoints):
-    for current_index, keypoint_no in matches.iteritems():
+    for current_index, keypoint_no in enumerate(matches):
         keypoint = keypoints[current_index]
-        cv2.circle(image, (int(keypoint.pt[0]), int(keypoint.pt[1])), 10, (0, 255, 0), 3)
+        cv2.circle(image, (int(keypoint.pt[0]), int(keypoint.pt[1])), 10, (255, 0, 0), 1)
+        cv2.drawMarker(image, (int(keypoint.pt[0]), int(keypoint.pt[1])), (0, 255, 0), 1, 15, 1, 8)
     return image
 
 def defineFlags():

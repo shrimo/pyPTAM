@@ -11,7 +11,7 @@ def MTL(filename):
         if values[0] == 'newmtl':
             mtl = contents[values[1]] = {}
         elif mtl is None:
-            raise ValueError, "mtl file doesn't start with newmtl stmt"
+            raise (ValueError, "mtl file doesn't start with newmtl stmt")
         elif values[0] == 'map_Kd':
             # load the texture referred to by this declaration
             mtl[values[0]] = values[1]
@@ -44,12 +44,13 @@ class OBJ:
             values = line.split()
             if not values: continue
             if values[0] == 'v':
-                v = map(float, values[1:4])
+                v = list(map(float, values[1:4]))
                 if swapyz:
+                    # print(type(v))
                     v = v[0], v[2], v[1]
                 self.vertices.append(v)
             elif values[0] == 'vn':
-                v = map(float, values[1:4])
+                v = list(map(float, values[1:4]))
                 if swapyz:
                     v = v[0], v[2], v[1]
                 self.normals.append(v)
@@ -84,12 +85,19 @@ class OBJ:
             vertices, normals, texture_coords, material = face
 
             mtl = self.mtl[material]
-            if 'texture_Kd' in mtl:
-                # use diffuse texmap
-                glBindTexture(GL_TEXTURE_2D, mtl['texture_Kd'])
-            else:
+            glColor(1.0, 1.0, 1.0)
+            # if 'texture_Kd' in mtl:
+            #     # use diffuse texmap
+            #     glBindTexture(GL_TEXTURE_2D, mtl['texture_Kd'])
+            # else:
                 # just use diffuse colour
-                glColor(*mtl['Kd'])
+                # clr = list(mtl['Kd'])
+                # print(clr)
+                # print(dir(glColor.__doc__))
+                # if clr:
+                #     glColor(*clr)
+                # else:
+                #     glColor(1.0, 1.0, 1.0)
 
             glBegin(GL_POLYGON)
             for i in range(len(vertices)):

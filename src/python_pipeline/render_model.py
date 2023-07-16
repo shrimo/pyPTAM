@@ -169,7 +169,8 @@ def choose_keypoint(old_keypoint, matches_keypoints):
     closest_keypoint = old_keypoint
     x = 0
     y = 1
-    for current_index, keypoint_no in matches_keypoints[0].iteritems():
+    # print(matches_keypoints[0], type(matches_keypoints[0]))
+    for current_index, keypoint_no in enumerate(matches_keypoints[0]):
         keypoint = matches_keypoints[1][current_index]
         distance = math.sqrt(
                 (keypoint.pt[y] - old_keypoint.pt[y]) ** 2 + (keypoint.pt[x] - old_keypoint.pt[x]) ** 2 )
@@ -217,6 +218,7 @@ def defineFlags():
     return parser.parse_args()
 
 cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture('./videos/water.mp4')
 # tx: -23, ty: -10, rx: 157, ry: 527, zpos: 17
 def main():
     global obj
